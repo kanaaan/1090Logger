@@ -1,0 +1,13 @@
+{
+  "name": "1090Logger",
+  "version": "1.0.0",
+  "description": "1090Logger",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "author": "Kanaaan",
+ "devDependencies": {
+    "electron-prebuilt": "^0.36.5"
+  }
+}
