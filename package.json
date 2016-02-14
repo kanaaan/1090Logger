@@ -8,6 +8,8 @@
   },
   "author": "Kanaaan",
  "devDependencies": {
-    "electron-prebuilt": "^0.36.5"
+    "electron-prebuilt": "^0.36.5",
+     "net": "^1.0.2",
+     "express": "^4.13.3"
   }
 }
