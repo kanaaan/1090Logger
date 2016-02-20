@@ -19,7 +19,7 @@
 </head>
 <script>
     
-    adsb=require("./bconnect");
+    adsb=require("./adsbproxy");
     window.onload = function() {
         console.log( "window.onload called" );
     };
@@ -27,7 +27,7 @@
     function bconnectFunction()
     {
         alert( "bconnectFunction" );
-        adsb.connectToADSBServer();
+        adsb.connectToADSBServer(); 
     }
 
 </script>
