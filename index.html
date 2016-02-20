@@ -4,11 +4,11 @@
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" />
 
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 
 
 <head>
@@ -20,20 +20,28 @@
     window.onload = function() {
         console.log( "window.onload called" );
         adsb=require("./adsbproxy");
+        
+        bootstrap_alert = function() {}
+        bootstrap_alert.info = function(message) {
+                $('#alert_placeholder').html('<div class="alert alert-success"><a class="close" data-dismiss="alert" aria-label="close">×</a><span>'+message+'</span></div>')
+        }
+        bootstrap_alert.warning = function(message) {
+                $('#alert_placeholder').html('<div class="alert alert-warning"><a class="close" data-dismiss="alert" aria-label="close">×</a><span>'+message+'</span></div>')
+        }
+        
+        $('#stopbtn').on('click', function() {
+            bootstrap_alert.warning('<strong>Stop!</strong> recording ');
+        });
     };
 
     function bconnectFunction()
     {
-        alert( "bconnectFunction" );
-        adsb.connectToADSBServer(); 
+        bootstrap_alert.info('<strong>Recording!</strong> ADSB hexdump to text log file.');
+        adsb.connectToADSBServer();
     }
-
 </script>
 <body>
-    <div class="alert alert-success">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <strong>Recording!</strong> ADSB hexdump to text log file.
-    </div>
+    <div id = "alert_placeholder"></div>
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="jumbotron">
@@ -50,7 +58,7 @@
                     </script>.</p>
                 <p>
                     <a class="btn btn-primary btn-xl" href="#" role="button" id="bconnect" onclick="bconnectFunction()">Connect</a>
-                    <a class="btn btn-primary btn-xl" role="button" data-role="bstop">Stop</a>
+                    <a class="btn btn-primary btn-xl" type="button" id="stopbtn" data-role="bstop">Stop</a>
                 </p>
             </div>
         </div>
