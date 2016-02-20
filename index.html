@@ -18,14 +18,16 @@
     <title>1090 Logger</title>
 </head>
 <script>
+    
+    adsb=require("./bconnect");
     window.onload = function() {
         console.log( "window.onload called" );
     };
 
     function bconnectFunction()
     {
-        require("./bconnect");
         alert( "bconnectFunction" );
+        adsb.connectToADSBServer();
     }
 
 </script>
