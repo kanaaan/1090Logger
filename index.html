@@ -1,27 +1,25 @@
 <!DOCTYPE html>
 <html>
 
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css" />
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" />
 
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-<!--
-<script type="text/javascript" src="bconnect.js"></script>
--->
+
+
 <head>
     <meta charset="UTF-8">
     <title>1090 Logger</title>
 </head>
 <script>
     
-    adsb=require("./adsbproxy");
     window.onload = function() {
         console.log( "window.onload called" );
+        adsb=require("./adsbproxy");
     };
 
     function bconnectFunction()
@@ -32,6 +30,10 @@
 
 </script>
 <body>
+    <div class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Recording!</strong> ADSB hexdump to text log file.
+    </div>
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="jumbotron">
