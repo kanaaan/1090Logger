@@ -76,6 +76,6 @@ function getDateTimeStr() {
     var day  = date.getDate();
     day = (day < 10 ? "0" : "") + day;
 
-    return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec+"."+date.getMilliseconds();
+    return year + ":" + month + ":" + day + "-" + hour + ":" + min + ":" + sec+"."+date.getMilliseconds();
 
 }

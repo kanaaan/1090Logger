@@ -16,7 +16,6 @@
     <title>1090 Logger</title>
 </head>
 <script>
-    
     window.onload = function() {
         console.log( "window.onload called" );
         adsb=require("./adsbproxy");
@@ -39,9 +38,11 @@
         bootstrap_alert.info('<strong>Recording!</strong> ADSB hexdump to text log file.');
         adsb.connectToADSBServer();
     }
+
 </script>
+
 <body>
-    <div id = "alert_placeholder"></div>
+    <div id="alert_placeholder"></div>
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="jumbotron">
