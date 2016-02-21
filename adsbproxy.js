@@ -38,9 +38,8 @@ exports.connectToADSBServer= function connectToADSBServer()
         for (var i = 0; i < data.length; i++) {
             datatxt += decimalToHex(data[i])+' ';
         }
-        
         console.log('Frame: ' +count+', Length:'+ data.length + ' '+datatxt);
-        fs.appendFileSync(filename,datatxt+'\n');
+        fs.appendFileSync(filename,getDateTimeStr()+" "+datatxt+'\n');
     });
 
     client.on('close', function() {
@@ -54,4 +53,29 @@ function decimalToHex(d) {
         hex = "0" + hex;
     }
     return hex;
+}
+
+function getDateTimeStr() {
+
+    var date = new Date();
+
+    var hour = date.getHours();
+    hour = (hour < 10 ? "0" : "") + hour;
+
+    var min  = date.getMinutes();
+    min = (min < 10 ? "0" : "") + min;
+
+    var sec  = date.getSeconds();
+    sec = (sec < 10 ? "0" : "") + sec;
+
+    var year = date.getFullYear();
+
+    var month = date.getMonth() + 1;
+    month = (month < 10 ? "0" : "") + month;
+
+    var day  = date.getDate();
+    day = (day < 10 ? "0" : "") + day;
+
+    return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec+"."+date.getMilliseconds();
+
 }
