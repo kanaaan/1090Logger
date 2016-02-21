@@ -4,16 +4,34 @@ exports.connectToADSBServer= function connectToADSBServer()
     const net = require('net');
     const fs = require('fs');
 
+    // Keep track of the ADSBScope clients 
+    var scopes = []; 
+
     var client = new net.Socket();
     var count=0;
     var filename='1090Logger_'+(new Date().toISOString().replace(/:/,'_').replace(/:/,'_'))+'.txt';
     console.log(filename);
 
+    // Connect to ADSB server
     client.connect(31001, '127.0.0.1', function() {
-    console.log('Connected to ADS-B server');
+        console.log('Connected to ADS-B server');
     });
+    
+    // Create server
+    net.createServer(function (socket) {
+        // Identify the client
+        socket.name = socket.remoteAddress + ":" + socket.remotePort;
+        // Put the new client in the list
+        scopes.push(socket); 
+    }).listen(31002);
 
     client.on('data', function(data) {
+        // dispacth message to clients
+        scopes.forEach(function (scope) { 
+            // write message to ADSBScope client 
+            scope.write(data);
+        });
+        // Increment messages counter
         count=count+1;
         
         var datatxt='';
