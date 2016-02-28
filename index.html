@@ -30,6 +30,7 @@
 
         $('#stopbtn').on('click', function() {
             bootstrap_alert.warning('<strong>Stop!</strong> recording ');
+            adsb.closeAll();
         });
     };
 
@@ -46,8 +47,8 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="jumbotron">
-                <h1>1090 Logger</h1>
-                <p>Node
+                <h1 id="applicationname">1090 Logger</h1>
+                <p id="consoletxt">Node
                     <script>
                         document.write(process.versions.node)
                     </script>, Chrome
