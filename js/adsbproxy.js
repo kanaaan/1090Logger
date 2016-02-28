@@ -4,8 +4,11 @@ exports.closeAll= function closeAll()
             // write message to ADSBScope client
             scope.end();
         });
-    server.close();
-    client.end();
+        if (server)
+        {
+            server.close();
+            client.end();   
+        }
 }
 
 var server;
@@ -37,8 +40,14 @@ exports.connectToADSBServer= function connectToADSBServer()
         socket.name = socket.remoteAddress + ":" + socket.remotePort;
         // Put the new client in the list
         scopes.push(socket);
+        console.log('ADS-B scope connected');
+        socket.on('close', function() {
+            console.log('ADS-B scope disconnected');
+            scopes.pop(socket);
+        });
     }).listen(31002);
-
+    
+    
     client.on('data', function(data) {
         // dispacth message to clients
         scopes.forEach(function (scope) {
@@ -52,7 +61,7 @@ exports.connectToADSBServer= function connectToADSBServer()
         for (var i = 0; i < data.length; i++) {
             datatxt += decimalToHex(data[i])+' ';
         }
-        console.log('Frame: ' +count+', Length:'+ data.length + ' '+datatxt);
+        //console.log('Frame: ' +count+', Length:'+ data.length + ' '+datatxt);
         fs.appendFileSync(filename,getDateTimeStr()+" "+datatxt+'\n');
         // Add tp consoletxt
         var consoletxt='Frame: ' +count+', Length:'+ data.length;
@@ -60,7 +69,7 @@ exports.connectToADSBServer= function connectToADSBServer()
     });
 
     client.on('close', function() {
-        console.log('Connection to ADS-B closed');
+        console.log('Connection to ADS-B server closed');
     });
 };
 
