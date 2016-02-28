@@ -11,6 +11,20 @@
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <script src="js/typed.js" type="text/javascript"></script>
 
+<style>
+.btn {
+    margin: 10px;
+}
+
+p {
+    margin: 10px;
+}
+
+div {
+   border-radius: 25px;
+}
+</style>
+
 <head>
     <meta charset="UTF-8">
     <title>1090 Logger</title>
@@ -32,6 +46,11 @@
             bootstrap_alert.warning('<strong>Stop!</strong> recording ');
             adsb.closeAll();
         });
+        
+         $('#breplay').on('click', function() {
+            bootstrap_alert.warning('<strong>Replay!</strong> please select a file to replay ');
+            adsb.closeAll();
+        });
     };
 
     function bconnectFunction()
@@ -43,8 +62,7 @@
 </script>
 
 <body>
-    <div id="alert_placeholder"></div>
-    <div class="panel panel-default">
+   <div class="panel panel-default">
         <div class="panel-body">
             <div class="jumbotron">
                 <h1 id="applicationname">1090 Logger</h1>
@@ -59,12 +77,14 @@
                         document.write(process.versions.electron)
                     </script>.</p>
                 <p>
-                    <a class="btn btn-primary btn-xl" href="#" role="button" id="bconnect" onclick="bconnectFunction()">Connect</a>
-                    <a class="btn btn-primary btn-xl" type="button" id="stopbtn" data-role="bstop">Stop</a>
+                    <a class="btn btn-primary btn-lg" href="#" role="button" id="bconnect" onclick="bconnectFunction()">Connect</a>
+                    <a class="btn btn-primary btn-lg" type="button" id="stopbtn" data-role="bstop">Stop</a>
+                    <a class="btn btn-success btn-lg" type="button" id="breplay" data-role="breplay">Replay</a>
                 </p>
             </div>
         </div>
     </div>
+     <div id="alert_placeholder"></div>
 </body>
 
 </html>
