@@ -33,6 +33,7 @@ div {
     window.onload = function() {
         console.log( "window.onload called" );
         adsb=require("./js/adsbproxy");
+        player=require("./js/replayraw")
 
         bootstrap_alert = function() {}
         bootstrap_alert.info = function(message) {
@@ -43,15 +44,27 @@ div {
         }
 
         $('#stopbtn').on('click', function() {
-            bootstrap_alert.warning('<strong>Stop!</strong> recording ');
+            bootstrap_alert.warning('<strong>Stop!</strong> recorder or player');
             adsb.closeAll();
+            player.closeAll();
         });
         
+        $('#breplay').on('click', function() {
+            if (player.filename.length>0)
+            {
+                bootstrap_alert.info('Replaying file '+ player.filename);
+                player.replayFile();
+            }
+            else
+            {
+                bootstrap_alert.warning('Please select a file first');
+            }
+        });
        
         $('input[type="file"]').change(function(e){
             adsb.closeAll();
-            var fileName = e.target.files[0].name;
-            bootstrap_alert.warning('The file "' + fileName +  '" is selected for replay.');        
+            player.filename = e.target.files[0].name;
+            bootstrap_alert.warning('The file "' + player.filename +  '" is selected for replay.');        
         });
     };
 
@@ -82,7 +95,7 @@ div {
                     <a class="btn btn-primary btn-lg" href="#" role="button" id="bconnect" onclick="bconnectFunction()">Connect</a>
                     <a class="btn btn-primary btn-lg" type="button" id="stopbtn" data-role="bstop">Stop</a>
                     <div class="panel-body">
-                        <a class="btn btn-success btn-lg btn-file">Replay</a>
+                        <a class="btn btn-success btn-lg btn-file" type="button" id="breplay">Replay</a>
                         <input type="file">
                     </div>
                 </p>
