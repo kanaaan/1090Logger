@@ -52,6 +52,17 @@ exports.replayFile=function replayFile()
             
             lineReader.on('line', function (line) {
                 //console.log('Line from file:', line);
+                var res=line.split(" ")
+                var inttab= [];
+                //Skip the first item timestamp and last item the return line
+                for (var i = 1; i < res.length-1; i++) {
+                    inttab[i-1]=parseInt(res[i],16);
+                }
+                // dispacth message to clients
+                scopes.forEach(function (scope) {
+                    // write message to ADSBScope client
+                    scope.write(new Buffer(inttab));
+                });
             });
         }
         else
