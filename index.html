@@ -64,7 +64,8 @@ div {
         $('input[type="file"]').change(function(e){
             adsb.closeAll();
             player.filename = e.target.files[0].name;
-            bootstrap_alert.warning('The file "' + player.filename +  '" is selected for replay.');        
+            player.startServer();
+            bootstrap_alert.warning('Server started and the file "' + player.filename +  '" is ready for replay.');
         });
     };
 

@@ -18,33 +18,39 @@ var scopes = [];
 var filename="";
 exports.filename=filename;
 
-exports.replayFile=function replayFile()
+
+exports.startServer=function startServer()
 {
     const net = require('net');
-    var fs = require('fs'); 
     exports.closeAll();
+    // Keep track of the ADSBScope clients
+    scopes = [];
+
+
+    // Create server
+    console.log('Creating server on 31002');
+    server=net.createServer(function (socket) {
+        // Identify the client
+        socket.name = socket.remoteAddress + ":" + socket.remotePort;
+        // Put the new client in the list
+        scopes.push(socket);
+        console.log('ADS-B scope connected');
+        socket.on('close', function() {
+            console.log('ADS-B scope disconnected');
+            scopes.pop(socket);
+        });
+    }).listen(31002);
     
+}
+
+exports.replayFile=function replayFile()
+{
+    var fs = require('fs'); 
+    var counter=0;
     filename=fpath+exports.filename;
     console.log('Check file exists '+filename);
     fs.stat(filename, function(err, stat) {
         if(err == null) {
-            // Keep track of the ADSBScope clients
-            scopes = [];
-
-
-            // Create server
-            console.log('Creating server on 31002');
-            server=net.createServer(function (socket) {
-                // Identify the client
-                socket.name = socket.remoteAddress + ":" + socket.remotePort;
-                // Put the new client in the list
-                scopes.push(socket);
-                console.log('ADS-B scope connected');
-                socket.on('close', function() {
-                    console.log('ADS-B scope disconnected');
-                    scopes.pop(socket);
-                });
-            }).listen(31002);
             console.log('Opening '+filename);
             var lineReader = require('readline').createInterface({
                 input: require('fs').createReadStream(filename)
@@ -58,11 +64,21 @@ exports.replayFile=function replayFile()
                 for (var i = 1; i < res.length-1; i++) {
                     inttab[i-1]=parseInt(res[i],16);
                 }
+                counter=counter+1;
+                //console.log(counter);
                 // dispacth message to clients
                 scopes.forEach(function (scope) {
                     // write message to ADSBScope client
                     scope.write(new Buffer(inttab));
                 });
+                lineReader.pause();
+                setTimeout(function () {
+                    lineReader.resume();
+                }, 8000);
+            });
+            
+            lineReader.on('end', function () {
+                console.log("Replay ended");
             });
         }
         else
