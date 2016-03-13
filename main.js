@@ -6,13 +6,7 @@ var express = require('express');
 var appexpress = express();
 
 const net = require('net');
-/*
-var client = new net.Socket();
-client.connect(1337, '127.0.0.1', function() {
-	console.log('Connected');
-	client.write('Hello, server! Love, Client.');
-});
-*/
+
 
 appexpress.get('/bconnect', function (req, res) {
 	console.log('bconnect.js');
