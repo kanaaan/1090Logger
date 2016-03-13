@@ -3,4 +3,4 @@
  - 1090 Hexdump logger
  - 1090 Log player
 
-![alt tag](https://github.com/kanaaan/1090Logger/blob/master/1090Logger.pngg)
+![alt tag](https://github.com/kanaaan/1090Logger/blob/master/1090Logger.png)
